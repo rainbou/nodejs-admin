@@ -2,9 +2,15 @@
   "name": "nodejs-admin",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "bin": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app.js",
+    "pkg": "./node_modules/.bin/pkg . --out-path=dist/"
+  },
+  "pkg": {
+    "targets": [
+      "node12-win-x64"
+    ]
   },
   "repository": {
     "type": "git",
@@ -15,5 +21,20 @@
   "bugs": {
     "url": "https://github.com/rainbou/nodejs-admin/issues"
   },
-  "homepage": "https://github.com/rainbou/nodejs-admin#readme"
+  "homepage": "https://github.com/rainbou/nodejs-admin#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "log4js": "^6.3.0"
+  },
+  "devDependencies": {
+    "eslint": "^7.11.0",
+    "eslint-config-standard": "^14.1.1",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "pkg": "^4.4.9"
+  }
 }

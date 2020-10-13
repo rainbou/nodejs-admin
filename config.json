@@ -1,0 +1,5 @@
+{
+  "servePort":3000,
+  "systemName":"账务管理系统",
+  "allowOrigins":["http://localhost:3000"]
+}
