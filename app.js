@@ -4,8 +4,9 @@ const app = express()
 const path = require('path')
 const bodyPaser = require('body-parser')
 const tempDirPath = path.join(process.cwd(), './') + '/tempdir'
-const logger = require('./utils/logs')
-const cors = require('./utils/cors')
+const logger = require('./src/utils/logs')
+const cors = require('./src/utils/cors')
+const JwtUtil = require('./src/utils/jwt')
 
 app.use(logger.log4js.connectLogger(logger.getLogger(), { level: 'auto', format: ':method :url :status   :response-time ms' }))
 
@@ -13,6 +14,21 @@ app.use(bodyPaser.json())
 app.use(bodyPaser.urlencoded({ extended: true }))
 
 app.use(cors())
+app.use((req, res, next) => {
+  if (req.url !== '/user/login') {
+    const token = req.headers.token
+    const jwt = new JwtUtil(token)
+    const result = jwt.verifyToken()
+    if (result === 'error') {
+      res.json({
+        status: 403,
+        message: '登录已过期，请重新登录'
+      })
+    } else {
+      next()
+    }
+  }
+})
 // // 添加请求头，处理跨域
 // app.all('*', function (req, res, next) {
 //   res.header('Access-Control-Allow-Origin', '*')
